@@ -2,6 +2,9 @@
 
 A repository with a few of my personal projects.
 
+Wolfram Research:
+Wolfram code used in indepdent research work, testing effectiveness of Lemna Minor Fertilizer
+
 Matlab:
 Bingo - makes a randomized bingo board
 Word Cloud Parser - Takes a text file, cleans it up, puts out a wordcloud of the most meaningful words
