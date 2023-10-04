@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# sudo ./pi-upd.sh
+
+apt-get update -y
+apt-get upgrade -y
+apt-get dist-upgrade -y
+apt autoremove
+apt-get autoclean
+
+
+# Git Page
+https://github.com/MichMich/MagicMirror
+
+# MagicMirror upgrade
+cd ~/MagicMirror
+git pull && npm install
+
+# Start MagicMirror
+cd ~/MagicMirror
+npm start
+
+# Upgrading Nodejs
+https://thisdavej.com/upgrading-to-more-recent-versions-of-node-js-on-the-raspberry-pi/
+
+
+# ssh client
+https://www.mobatek.net/
+
+need VNC viewer to boot up mirror#
