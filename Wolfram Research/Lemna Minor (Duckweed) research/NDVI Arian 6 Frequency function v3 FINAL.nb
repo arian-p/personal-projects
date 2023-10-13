@@ -1,0 +1,173 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='WolframDesktop 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       161,          7]
+NotebookDataLength[      5997,        165]
+NotebookOptionsPosition[      5431,        146]
+NotebookOutlinePosition[      5775,        161]
+CellTagsIndexPosition[      5732,        158]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["FREQUENCY FUNCTION", "Title",
+ CellChangeTimes->{{3.7918791676853485`*^9, 
+  3.791879175365526*^9}},ExpressionUUID->"bfacaa49-9416-455b-946b-\
+80a8ec1e1bff"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", 
+  RowBox[{
+  "NDVIFunctionArian", ",", " ", "NDVIsingle", ",", " ", "NDVIformula", ",", 
+   " ", "cropconstant"}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NDVIformula", "[", 
+    RowBox[{"pixel1_", ",", "pixel2_"}], "]"}], ":=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"pixel1", "-", "pixel2"}], ")"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"pixel1", "+", "pixel2"}], ")"}]}], ")"}], "+", "1"}], ")"}],
+     "     ", "/", "2"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"cropconstant", " ", "=", " ", "100"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"histoConstant", " ", "=", " ", "100"}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7920665118848543`*^9, 3.7920665268213997`*^9}, {
+  3.7926868892056885`*^9, 
+  3.7926868900591817`*^9}},ExpressionUUID->"83cedce3-37eb-4df3-a549-\
+c597f323684a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"NDVIfrequecyfunction2", "[", 
+   RowBox[{"user_", ",", " ", "month_", ",", " ", "date_"}], "]"}], " ", ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"(", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Clear", "[", 
+     RowBox[{"files", ",", " ", "dataList", ",", " ", "cuts"}], "]"}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"files", "=", 
+     RowBox[{"FileNames", "[", 
+      RowBox[{"\"\<*.jpg\>\"", ",", 
+       RowBox[{"StringJoin", "[", 
+        RowBox[{"\"\<C:\\\\Users\\\\\>\"", ",", " ", 
+         RowBox[{"ToString", "@", "user"}], ",", " ", 
+         "\"\<\\\\OneDrive - Loudoun County Public \
+Schools\\\\_Research\\\\13. ----NDVI DATA ----\\\\Trial 1 Pentax\\\\\>\"", 
+         ",", " ", 
+         RowBox[{"ToString", "@", "month"}], ",", "\"\<-\>\"", ",", " ", 
+         RowBox[{"ToString", "@", "date"}]}], "]"}]}], "]"}]}], ";", "\n", 
+    RowBox[{"dataList", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Import", "[", "#", "]"}], "&"}], "/@", "files"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"cuts", " ", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"StringDrop", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"FileNames", "[", "files", "]"}], "[", 
+          RowBox[{"[", "n", "]"}], "]"}], ",", " ", "104"}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", " ", "1", ",", " ", 
+         RowBox[{"Length", "@", "dataList"}]}], "}"}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"AbsoluteTiming", "[", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Export", "[", 
+        RowBox[{
+         RowBox[{"StringJoin", "[", 
+          RowBox[{
+           RowBox[{"ToString", "@", "histoConstant"}], ",", "\"\<-\>\"", ",", 
+           RowBox[{"ToString", "@", "n"}], ",", "\"\<.png\>\""}], "]"}], ",", 
+         RowBox[{"Histogram", "[", 
+          RowBox[{
+           RowBox[{"Flatten", "[", 
+            RowBox[{"ImageData", "[", 
+             RowBox[{"ImageApply", "[", 
+              RowBox[{"NDVIformula", ",", 
+               RowBox[{"ColorSeparate", "[", 
+                RowBox[{
+                 RowBox[{"ImageTake", "[", 
+                  RowBox[{
+                   RowBox[{"dataList", "[", 
+                    RowBox[{"[", "n", "]"}], "]"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"cropconstant", ",", " ", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"ImageDimensions", "[", 
+                    RowBox[{"dataList", "[", 
+                    RowBox[{"[", "n", "]"}], "]"}], "]"}], "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "-", "cropconstant"}]}], 
+                    "}"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"cropconstant", ",", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"ImageDimensions", "[", 
+                    RowBox[{"dataList", "[", 
+                    RowBox[{"[", "n", "]"}], "]"}], "]"}], "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "-", "cropconstant"}]}], 
+                    "}"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"\"\<B\>\"", ",", "\"\<R\>\""}], "}"}]}], "]"}]}], 
+              "]"}], "]"}], "]"}], ",", " ", "histoConstant"}], "]"}]}], 
+        "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", " ", "1", ",", " ", 
+         RowBox[{"Length", "@", "dataList"}]}], "}"}]}], "]"}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", ")"}]}]], "Input",
+ InitializationCell->
+  True,ExpressionUUID->"01ab9fe3-c1f0-494a-b213-6bfccaea07de"]
+}, Open  ]]
+},
+WindowSize->{1920, 997},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 11, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[583, 22, 163, 3, 96, "Title",ExpressionUUID->"bfacaa49-9416-455b-946b-80a8ec1e1bff"],
+Cell[749, 27, 965, 28, 102, "Input",ExpressionUUID->"83cedce3-37eb-4df3-a549-c597f323684a",
+ InitializationCell->True],
+Cell[1717, 57, 3698, 86, 292, "Input",ExpressionUUID->"01ab9fe3-c1f0-494a-b213-6bfccaea07de",
+ InitializationCell->True]
+}, Open  ]]
+}
+]
+*)
+
