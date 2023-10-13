@@ -1,0 +1,1065 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     47773,       1057]
+NotebookOptionsPosition[     43154,        981]
+NotebookOutlinePosition[     44028,       1009]
+CellTagsIndexPosition[     43985,       1006]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Sink or Swim: Visualizing the effect of sea level rise on a topographical map\
+\>", "Title",
+ CellChangeTimes->{{3.770055572438499*^9, 3.7700555729498453`*^9}, {
+  3.770055604008165*^9, 3.7700556066618843`*^9}, {3.7719305202536287`*^9, 
+  3.771930532901022*^9}},ExpressionUUID->"49ab34ee-bfd5-49f5-beef-\
+400d3cc456dd"],
+
+Cell[TextData[{
+ StyleBox["Please Execute Code in Notebook\n",
+  FontSlant->"Italic"],
+ "\nArian Patel"
+}], "Text",
+ CellChangeTimes->{{3.549624168509506*^9, 3.549624171985794*^9}, {
+  3.549624508772977*^9, 3.549624510775043*^9}, {3.5498187159613867`*^9, 
+  3.5498187170087957`*^9}, {3.549819049020514*^9, 3.5498190533440437`*^9}, {
+  3.77005561844785*^9, 3.7700556489651537`*^9}, {3.7719305369999976`*^9, 
+  3.77193053872655*^9}, {3.9061880806974025`*^9, 
+  3.9061880938151836`*^9}},ExpressionUUID->"94536f76-3fd2-4bf6-b228-\
+fa93ec9acae9"],
+
+Cell["Mentor: Lauren Cooper", "Text",
+ CellChangeTimes->{{3.549624515773694*^9, 3.5496245246892014`*^9}, {
+  3.5498187208956137`*^9, 3.5498187221413403`*^9}, {3.5498190558319674`*^9, 
+  3.54981906151682*^9}, {3.770055624686027*^9, 3.770055659820487*^9}, {
+  3.771930541433177*^9, 
+  3.7719305453053493`*^9}},ExpressionUUID->"b70c649b-a958-4202-9f22-\
+238ea1f9c7d4"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7719307720951204`*^9, 
+  3.771930793575759*^9}},ExpressionUUID->"765802f1-9a17-4afe-93ed-\
+b9aa389559aa"],
+
+Cell["\<\
+As the planet warms, ice melts and oceans expand, resulting in sea level \
+rise. This process threatens many coastal cities, and locations such as Kent \
+Island in Maryland and the Maldives in the Pacific ocean are already \
+considering relocation. In addition to simply flooding areas, sea level rise \
+encourages more extreme weather and poses a major threat to the 40% of the \
+global population that lives close to the sea [1]. 
+
+This project builds off of a previous demonstration to model sea level rise \
+in any location on earth in a more user-friendly manner. The user can view \
+any region and manipulate the sea level; additionally, political boundaries \
+have been added to better visualize the loss of land. Users can also input an \
+address, and a map with multiple zoom levels will be displayed around this \
+address. Finally, an option showing the world if all ice melted has been \
+added. 
+\
+\>", "Text",
+ CellChangeTimes->{{3.7719306083858337`*^9, 3.771930700287322*^9}, {
+   3.771930736316497*^9, 3.771930778891485*^9}, 3.7719312992168026`*^9, {
+   3.7719313790638623`*^9, 3.7719315200492897`*^9}, {3.771936562060857*^9, 
+   3.7719365850441403`*^9}, {3.7719401780577755`*^9, 
+   3.7719402015545073`*^9}, {3.771940250411784*^9, 3.7719402540260105`*^9}, {
+   3.7719402927012224`*^9, 3.7719403294999146`*^9}, {3.771940362746258*^9, 
+   3.771940365911062*^9}, {3.7719448777654357`*^9, 
+   3.771944890168785*^9}},ExpressionUUID->"8c7192f8-2da6-4f7f-a8da-\
+43487bdec4de"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exploring sea level rise", "Section",
+ CellChangeTimes->{{3.771930811341733*^9, 
+  3.77193082151241*^9}},ExpressionUUID->"c58edb44-6383-42aa-b730-\
+13bde8f77ae2"],
+
+Cell["\<\
+I am using the built in function \[OpenCurlyDoubleQuote]GeoElevationData\
+\[CloseCurlyDoubleQuote], which pulls data from a location that can be \
+displayed as 3D graphics or list point plots, and relief plots. The following \
+code displays some examples with the U.S. State of Maryland. \
+\>", "Text",
+ CellChangeTimes->{{3.771930858584463*^9, 3.771930892327196*^9}, {
+  3.771935189133706*^9, 3.771935262300036*^9}, {3.771935832338639*^9, 
+  3.7719358463865595`*^9}},ExpressionUUID->"03b316f3-9eb7-41a8-923e-\
+0b6dfe9b90d8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dataMD", " ", "=", " ", 
+   RowBox[{"GeoElevationData", "[", 
+    RowBox[{
+     TemplateBox[{"\"Maryland, United States\"", 
+       RowBox[{"Entity", "[", 
+         RowBox[{"\"AdministrativeDivision\"", ",", 
+           RowBox[{"{", 
+             RowBox[{"\"Maryland\"", ",", "\"UnitedStates\""}], "}"}]}], 
+         "]"}], "\"Entity[\\\"AdministrativeDivision\\\", {\\\"Maryland\\\", \
+\\\"UnitedStates\\\"}]\"", "\"administrative division\""},
+      "Entity"], ",", 
+     RowBox[{"GeoRange", "\[Rule]", 
+      RowBox[{"Quantity", "[", 
+       RowBox[{"100", ",", "\"\<Kilometers\>\""}], "]"}]}], ",", 
+     RowBox[{"GeoProjection", "\[Rule]", "Automatic"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"6cc17006-bc67-4d9f-bf70-74d897c05e67"],
+
+Cell[BoxData[
+ RowBox[{"ListPlot3D", "[", 
+  RowBox[{
+   RowBox[{"Reverse", "[", "dataMD", "]"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"Automatic", ",", "Automatic", ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "10000"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"MeshFunctions", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"#3", "&"}], "}"}]}], ",", 
+   RowBox[{"Mesh", "\[Rule]", "30"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "Medium"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.771935755700754*^9, 3.7719357957625103`*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"bc33d079-c1b3-4e2e-b1f6-24d8d9e6ea96"],
+
+Cell[BoxData[
+ RowBox[{"ReliefPlot", "[", 
+  RowBox[{
+   RowBox[{"Reverse", "[", "dataMD", "]"}], ",", 
+   RowBox[{"ColorFunction", "\[Rule]", "\"\<Rainbow\>\""}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.771935785570392*^9, 3.77193581645473*^9}, {
+  3.771935997225184*^9, 3.771936018837001*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"ad944ca1-6c53-42a1-8b46-66fb1c7618d8"],
+
+Cell["\<\
+I first explored visually analyzing the relief plots by converting them to a \
+gray scale, and thresholding, or increasing the amount of black. This would \
+simulate the lowest points of the graph taking up more area. While this \
+technique can simulate a rising ocean, it also expands other low points such \
+as depressions. The following code is an example of this technique: ***fix \
+wording/meaning***\
+\>", "Text",
+ CellChangeTimes->{{3.771930858584463*^9, 3.771930929009754*^9}, {
+  3.7719358574717107`*^9, 3.7719359668496547`*^9}, {3.771936236060815*^9, 
+  3.771936241058632*^9}},ExpressionUUID->"3dbde470-ee2e-400c-9c5e-\
+cd37774bba59"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"image", "=", 
+   RowBox[{"Image", "[", 
+    RowBox[{"ReliefPlot", "[", 
+     RowBox[{
+      RowBox[{"Reverse", "[", "dataMD", "]"}], ",", 
+      RowBox[{"ColorFunction", "\[Rule]", "\"\<GrayTones\>\""}]}], "]"}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7719360416746464`*^9, 3.7719360564080486`*^9}, {
+  3.771936146204913*^9, 3.77193617647268*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"761e549c-a2e8-4961-bee5-349c0c9e38ba"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Threshold", "[", 
+    RowBox[{"image", ",", "percent"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"percent", ",", "0", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.771936180887562*^9, 3.771936211101616*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"ef2ccce9-02f0-4a86-9e5e-804d73748444"],
+
+Cell["\<\
+I then explored directly analyzing the data to determine which points were \
+\[OpenCurlyDoubleQuote]ocean\[CloseCurlyDoubleQuote] and which points were \
+pieces of land below sea level, however this proved to be very challenging. \
+\>", "Text",
+ CellChangeTimes->{{3.771930858584463*^9, 3.771930937464538*^9}, {
+  3.7719362485232944`*^9, 3.771936330393979*^9}, {3.771936696614416*^9, 
+  3.771936705513462*^9}, {3.7719403749207263`*^9, 
+  3.771940391736335*^9}},ExpressionUUID->"388c1052-d6d4-4dac-84db-\
+e293ba755933"],
+
+Cell["\<\
+While searching for possible solutions, I found a wolfram demonstration [2] \
+that simulated a rising sea level. This was accomplished by replacing the \
+lowest z values, or heights, with a new sea level defined by the user: \
+\>", "Text",
+ CellChangeTimes->{{3.771930858584463*^9, 3.771930945092595*^9}, {
+   3.771936332946746*^9, 3.771936392725973*^9}, 
+   3.771944895745603*^9},ExpressionUUID->"635f208d-e343-49db-a14d-\
+ad67b1fcdfab"],
+
+Cell["\<\
+{elev1, level},
+elev1 = QuantityMagnitude[GeoElevationData[Entity[\"Country\", countries], \
+GeoZoomLevel -> Automatic]];
+\tlevel = Min[elev1];
+elev1 /. z_Real /; z < sea -> level\
+\>", "CodeText",
+ CellChangeTimes->{{3.7719364183044367`*^9, 
+  3.7719364587336335`*^9}},ExpressionUUID->"ddb7e4be-25cc-4a21-b2c4-\
+cf3d251e0221"],
+
+Cell["\<\
+This core function was then turned into a manipulate in this demonstration : \
+\>", "Text",
+ CellChangeTimes->{
+  3.771936489939827*^9, {3.7719367406385164`*^9, 
+   3.7719367446400743`*^9}},ExpressionUUID->"095602cf-7bd5-4cc3-bc36-\
+b76574ea83e6"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"elev1", ",", "level"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"elev1", "=", 
+       RowBox[{"QuantityMagnitude", "[", 
+        RowBox[{"GeoElevationData", "[", 
+         RowBox[{
+          RowBox[{"Entity", "[", 
+           RowBox[{"\"\<Country\>\"", ",", "countries"}], "]"}], ",", 
+          RowBox[{"GeoZoomLevel", "\[Rule]", "Automatic"}]}], "]"}], "]"}]}], 
+      ";", "\[IndentingNewLine]", "\t", 
+      RowBox[{"level", "=", 
+       RowBox[{"Min", "[", "elev1", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"ReliefPlot", "[", 
+       RowBox[{
+        RowBox[{"elev1", "/.", 
+         RowBox[{
+          RowBox[{"z_Real", "/;", 
+           RowBox[{"z", "<", "sea"}]}], "\[Rule]", "level"}]}], ",", 
+        RowBox[{"DataReversed", "\[Rule]", "True"}], ",", 
+        RowBox[{"MaxPlotPoints", "\[Rule]", 
+         RowBox[{"ControlActive", "[", 
+          RowBox[{"300", ",", "\[Infinity]"}], "]"}]}], ",", 
+        RowBox[{"ImageSize", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"600", ",", "300"}], "}"}]}]}], "]"}]}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "countries", ",", "\"\<UnitedStates\>\"", ",", "\"\<countries\>\""}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<World\>\"", ",", "\"\<Russia\>\"", ",", 
+       RowBox[{"\"\<UnitedStates\>\"", "\[Rule]", "\"\<United States\>\""}], 
+       ",", "\"\<Italy\>\"", ",", "\"\<Canada\>\"", ",", 
+       RowBox[{"\"\<UnitedKingdom\>\"", "\[Rule]", "\"\<United Kingdom\>\""}],
+        ",", "\"\<India\>\""}], "\[IndentingNewLine]", "}"}], ",", " ", 
+     RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], " ", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"sea", ",", "0", ",", "\"\<sea level (in feet)\>\""}], "}"}], 
+     ",", 
+     RowBox[{"-", "400"}], ",", "400", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   RowBox[{"SynchronousUpdating", "\[Rule]", "False"}], ",", 
+   RowBox[{"SynchronousInitialization", "\[Rule]", "False"}], ",", 
+   RowBox[{"Deployed", "\[Rule]", "True"}], ",", " ", 
+   RowBox[{"AutorunSequencing", "\[Rule]", 
+    RowBox[{"{", "2", "}"}]}], ",", " ", 
+   RowBox[{"Deployed", "\[Rule]", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7719364473890843`*^9, 3.771936481499791*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"1a89bec9-bba2-4aa9-a1aa-399af130c7b5"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The functions", "Section",
+ CellChangeTimes->{{3.771930971634657*^9, 
+  3.7719309747365637`*^9}},ExpressionUUID->"f36410f2-419f-42ef-b9a2-\
+6d47f634712e"],
+
+Cell["\<\
+With this new base code, I could build a function that takes a location and a \
+change in sea level, and returns the resulting relief plot. This core \
+function is displayed below with a manipulate: \
+\>", "Text",
+ CellChangeTimes->{{3.771930979334714*^9, 3.771931024069781*^9}, {
+  3.7719310663629017`*^9, 3.771931076196514*^9}, {3.7719404184828625`*^9, 
+  3.7719404345893364`*^9}, {3.771940504688547*^9, 3.7719406052725925`*^9}, {
+  3.771946289590222*^9, 
+  3.7719463180455422`*^9}},ExpressionUUID->"8e64f6a9-8b52-45ff-b4d1-\
+51f6fede753d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"seaLevelRiseFunctionBasicV1", "[", 
+   RowBox[{"location_", ",", "sea_"}], "]"}], ":=", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"elev1", ",", "geodata", ",", "level"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"geodata", "=", 
+      RowBox[{"GeoElevationData", "[", 
+       RowBox[{"location", ",", "Automatic", ",", "\"\<GeoPosition\>\"", ",", 
+        RowBox[{"GeoZoomLevel", "\[Rule]", "Automatic"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"elev1", "=", 
+      RowBox[{"QuantityMagnitude", "[", 
+       RowBox[{"GeoElevationData", "[", 
+        RowBox[{"location", ",", 
+         RowBox[{"GeoZoomLevel", "\[Rule]", "Automatic"}]}], "]"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"level", "=", 
+      RowBox[{"Min", "[", "elev1", "]"}]}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"ReliefPlot", "[", 
+      RowBox[{
+       RowBox[{"elev1", "/.", 
+        RowBox[{
+         RowBox[{"z_Real", "/;", 
+          RowBox[{"z", "<", "sea"}]}], "\[Rule]", "level"}]}], ",", 
+       RowBox[{"DataReversed", "\[Rule]", "True"}], ",", 
+       RowBox[{"MaxPlotPoints", "\[Rule]", 
+        RowBox[{"ControlActive", "[", 
+         RowBox[{"300", ",", "\[Infinity]"}], "]"}]}], ",", 
+       RowBox[{"ImageSize", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"600", ",", "300"}], "}"}]}], ",", 
+       RowBox[{"DataRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"MinMax", "[", 
+           RowBox[{"geodata", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "All", ",", "All", ",", "2"}], "]"}], "]"}], 
+           "]"}], ",", 
+          RowBox[{"MinMax", "[", 
+           RowBox[{"geodata", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "All", ",", "All", ",", "1"}], "]"}], "]"}], 
+           "]"}]}], "}"}]}], ",", 
+       RowBox[{"ColorFunction", "\[Rule]", "\"\<Rainbow\>\""}]}], "]"}]}]}], 
+   "]"}], " "}]], "Input",
+ CellChangeTimes->{{3.7717814232159767`*^9, 3.7717814235437098`*^9}, {
+  3.771781475323243*^9, 3.7717815034707146`*^9}, {3.771781799586642*^9, 
+  3.7717818221076813`*^9}, {3.7718505541957006`*^9, 3.771850557778036*^9}, {
+  3.771941081389624*^9, 3.771941082230098*^9}, {3.7719415761241636`*^9, 
+  3.7719415957790594`*^9}, {3.77194372917988*^9, 3.77194373080451*^9}, {
+  3.771943776168844*^9, 3.7719438297338257`*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"e72b1a3c-9847-41e7-8629-f3d8494c2f10"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"seaLevelRiseBasicV1", "[", "location_", "]"}], " ", ":=", " ", 
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"seaLevelRiseFunctionBasicV1", "[", 
+     RowBox[{"location", ",", "sea"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "sea", ",", "0", ",", " ", "\"\<sea level change in feet\>\""}], "}"}],
+       ",", 
+      RowBox[{"-", "400"}], ",", "400", ",", "5", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.7717877598875313`*^9, 3.771787770572509*^9}, {
+  3.771787812466901*^9, 3.771787813044712*^9}, {3.771787924264988*^9, 
+  3.7717879560233464`*^9}, {3.771788017965743*^9, 3.7717880204965477`*^9}, {
+  3.77192844609282*^9, 3.7719284793775682`*^9}, {3.771943744551281*^9, 
+  3.771943765515113*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"2574a861-11dc-4680-916a-135ba4c2e40e"],
+
+Cell[BoxData[
+ RowBox[{"seaLevelRiseBasicV1", "[", 
+  NamespaceBox["LinguisticAssistant",
+   DynamicModuleBox[{Typeset`query$$ = "gujarat", Typeset`boxes$$ = 
+    TemplateBox[{"\"Gujarat, India\"", 
+      RowBox[{"Entity", "[", 
+        RowBox[{"\"AdministrativeDivision\"", ",", 
+          RowBox[{"{", 
+            RowBox[{"\"Gujarat\"", ",", "\"India\""}], "}"}]}], "]"}], 
+      "\"Entity[\\\"AdministrativeDivision\\\", {\\\"Gujarat\\\", \\\"India\\\
+\"}]\"", "\"administrative division\""}, "Entity"], 
+    Typeset`allassumptions$$ = {{
+     "type" -> "Clash", "word" -> "gujarat", "template" -> 
+      "Assuming \"${word}\" is ${desc1}. Use as ${desc2} instead", "count" -> 
+      "2", "Values" -> {{
+        "name" -> "AdministrativeDivision", "desc" -> 
+         "an administrative division", "input" -> 
+         "*C.gujarat-_*AdministrativeDivision-"}, {
+        "name" -> "Word", "desc" -> "a word", "input" -> 
+         "*C.gujarat-_*Word-"}}}, {
+     "type" -> "SubCategory", "word" -> "gujarat", "template" -> 
+      "Assuming ${desc1}. Use ${desc2} instead", "count" -> "3", 
+      "Values" -> {{
+        "name" -> "{Gujarat, India}", "desc" -> "Gujarat, India", "input" -> 
+         "*DPClash.AdministrativeDivisionE.gujarat-_**Gujarat.India--"}, {
+        "name" -> "{Gujarat, Gujranwala, Punjab, Pakistan}", "desc" -> 
+         "Gujarat, Gujranwala, Punjab, Pakistan", "input" -> 
+         "*DPClash.AdministrativeDivisionE.gujarat-_**Gujarat.Gujranwala.\
+Punjab.Pakistan--"}, {
+        "name" -> "{Gujrat, Gujranwala, Punjab, Pakistan}", "desc" -> 
+         "Gujrat, Gujranwala, Punjab, Pakistan", "input" -> 
+         "*DPClash.AdministrativeDivisionE.gujarat-_**Gujrat.Gujranwala.\
+Punjab.Pakistan--"}}}}, Typeset`assumptions$$ = {}, Typeset`open$$ = {1, 2}, 
+    Typeset`querystate$$ = {
+    "Online" -> True, "Allowed" -> True, "mparse.jsp" -> 
+     0.5317235`7.177230848270917, "Messages" -> {}}}, 
+    DynamicBox[ToBoxes[
+      AlphaIntegration`LinguisticAssistantBoxes["", 4, Automatic, 
+       Dynamic[Typeset`query$$], 
+       Dynamic[Typeset`boxes$$], 
+       Dynamic[Typeset`allassumptions$$], 
+       Dynamic[Typeset`assumptions$$], 
+       Dynamic[Typeset`open$$], 
+       Dynamic[Typeset`querystate$$]], StandardForm],
+     ImageSizeCache->{
+      265.27246102085337`, {7.136230510426685, 17.136230510426685`}},
+     TrackedSymbols:>{
+      Typeset`query$$, Typeset`boxes$$, Typeset`allassumptions$$, 
+       Typeset`assumptions$$, Typeset`open$$, Typeset`querystate$$}],
+    DynamicModuleValues:>{},
+    UndoTrackedVariables:>{Typeset`open$$}],
+   BaseStyle->{"Deploy"},
+   DeleteWithContents->True,
+   Editable->False,
+   SelectWithContents->True], "]"}]], "Input",
+ CellChangeTimes->{{3.771941278875765*^9, 3.7719412795688*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"500e0911-3d4e-42b2-a3eb-37f29789dbd7"],
+
+Cell["\<\
+I then implemented political boundaries into the manipulate so that one could \
+use to better visualize the land lost. It was challenging to implement the \
+political boundaries, normally a GeoGraphic, into this non-GeoGraphic based \
+relief plot. However, if you specify \[OpenCurlyDoubleQuote]GeoPosition\
+\[CloseCurlyDoubleQuote] in the data, you can associate the polygon of the \
+border to the coordinates on the map, and display it with an Epilog. The code \
+below shows the same core function, now with political boundaries. \
+\>", "Text",
+ CellChangeTimes->{{3.771940888000276*^9, 3.7719410326685266`*^9}, {
+  3.7719412573522186`*^9, 3.771941264341112*^9}, {3.7719463326233373`*^9, 
+  3.771946348956918*^9}, {3.771946380813514*^9, 
+  3.7719463900715957`*^9}},ExpressionUUID->"455e8f18-1c91-45ee-9ce4-\
+2b734a406e04"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"seaLevelRiseFunctionBasicV2", "[", 
+   RowBox[{"location_", ",", "sea_"}], "]"}], ":=", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"elev1", ",", "geodata", ",", "level"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"geodata", "=", 
+      RowBox[{"GeoElevationData", "[", 
+       RowBox[{"location", ",", "Automatic", ",", "\"\<GeoPosition\>\"", ",", 
+        RowBox[{"GeoZoomLevel", "\[Rule]", "Automatic"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"elev1", "=", 
+      RowBox[{"QuantityMagnitude", "[", 
+       RowBox[{"GeoElevationData", "[", 
+        RowBox[{"location", ",", 
+         RowBox[{"GeoZoomLevel", "\[Rule]", "Automatic"}]}], "]"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"level", "=", 
+      RowBox[{"Min", "[", "elev1", "]"}]}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"ReliefPlot", "[", 
+      RowBox[{
+       RowBox[{"elev1", "/.", 
+        RowBox[{
+         RowBox[{"z_Real", "/;", 
+          RowBox[{"z", "<", "sea"}]}], "\[Rule]", "level"}]}], ",", 
+       RowBox[{"DataReversed", "\[Rule]", "True"}], ",", 
+       RowBox[{"MaxPlotPoints", "\[Rule]", 
+        RowBox[{"ControlActive", "[", 
+         RowBox[{"300", ",", "\[Infinity]"}], "]"}]}], ",", 
+       RowBox[{"ImageSize", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"600", ",", "300"}], "}"}]}], ",", 
+       RowBox[{"DataRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"MinMax", "[", 
+           RowBox[{"geodata", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "All", ",", "All", ",", "2"}], "]"}], "]"}], 
+           "]"}], ",", 
+          RowBox[{"MinMax", "[", 
+           RowBox[{"geodata", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ",", "All", ",", "All", ",", "1"}], "]"}], "]"}], 
+           "]"}]}], "}"}]}], ",", 
+       RowBox[{"ColorFunction", "\[Rule]", "\"\<Rainbow\>\""}], ",", 
+       RowBox[{"Epilog", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"EdgeForm", "[", 
+           RowBox[{"{", 
+            RowBox[{"Cyan", ",", 
+             RowBox[{"Thickness", "[", "0.0009", "]"}]}], "}"}], "]"}], ",", 
+          RowBox[{"FaceForm", "[", 
+           RowBox[{"{", 
+            RowBox[{"Opacity", "[", 
+             RowBox[{"0.07", ",", "Blue"}], "]"}], "}"}], "]"}], ",", 
+          RowBox[{"location", "[", "\"\<Polygon\>\"", "]"}]}], "}"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}]}], "]"}], " "}]], "Input",
+ CellChangeTimes->{{3.7717814232159767`*^9, 3.7717814235437098`*^9}, {
+  3.771781475323243*^9, 3.7717815034707146`*^9}, {3.771781799586642*^9, 
+  3.7717818221076813`*^9}, {3.7718505541957006`*^9, 3.771850557778036*^9}, {
+  3.771941081389624*^9, 3.771941082230098*^9}, {3.7719415761241636`*^9, 
+  3.7719415957790594`*^9}, {3.7719416792663293`*^9, 3.771941681093771*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"56cfb32f-46b3-4256-9af0-338faa788db0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"seaLevelRiseBasicV2", "[", "location_", "]"}], " ", ":=", " ", 
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"seaLevelRiseFunctionBasicV2", "[", 
+     RowBox[{"location", ",", "sea"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "sea", ",", "0", ",", " ", "\"\<sea level change in feet\>\""}], "}"}],
+       ",", 
+      RowBox[{"-", "400"}], ",", "400", ",", "5", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.7719407943598175`*^9, 3.7719407956528053`*^9}, {
+  3.7719412959619164`*^9, 3.7719412961292934`*^9}, {3.771943673244494*^9, 
+  3.771943674056799*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"d43cfb32-28ee-44d5-8e39-b605878879e2"],
+
+Cell[BoxData[
+ RowBox[{"seaLevelRiseBasicV2", "[", 
+  TemplateBox[{"\"Virginia, United States\"", 
+    RowBox[{"Entity", "[", 
+      RowBox[{"\"AdministrativeDivision\"", ",", 
+        RowBox[{"{", 
+          RowBox[{"\"Virginia\"", ",", "\"UnitedStates\""}], "}"}]}], "]"}], 
+    "\"Entity[\\\"AdministrativeDivision\\\", {\\\"Virginia\\\", \
+\\\"UnitedStates\\\"}]\"", "\"administrative division\""},
+   "Entity"], "]"}]], "Input",
+ CellChangeTimes->{{3.771941298274971*^9, 3.771941298450074*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"e77ce3c3-37f9-4ce7-bae8-d09e26b4ca2b"],
+
+Cell["\<\
+The next functionality that I implemented was the ability to view your \
+address at multiple \[OpenCurlyDoubleQuote]zoom \
+levels\[CloseCurlyDoubleQuote]. The user needs to input their information, \
+and the program plots the address at different scales, showing the entire \
+country and providence, for example. This functionality was implemented \
+directly into the core function. This is demonstrated below with a bayside \
+hotel in Maryland. \
+\>", "Text",
+ CellChangeTimes->{{3.771930979334714*^9, 3.7719309920070934`*^9}, {
+   3.7719311730274057`*^9, 3.77193117789571*^9}, {3.771940814858303*^9, 
+   3.7719408656614647`*^9}, {3.7719417392358227`*^9, 3.77194182373458*^9}, {
+   3.77194187524774*^9, 3.771941948456005*^9}, {3.7719420834198065`*^9, 
+   3.7719421434624853`*^9}, {3.771942235272599*^9, 3.77194227553244*^9}, 
+   3.7719423512240796`*^9, {3.771946447832691*^9, 3.771946568626997*^9}, 
+   3.771947047798839*^9},ExpressionUUID->"0f97b0e3-26ba-43f2-8595-\
+8f43d4a5fcf0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"seaLevelRiseFunction", "[", 
+    RowBox[{"address_", ",", "location_", ",", "sea_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"elev1", ",", "geodata", ",", "level"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"geodata", "=", 
+       RowBox[{"GeoElevationData", "[", 
+        RowBox[{"location", ",", "Automatic", ",", "\"\<GeoPosition\>\"", ",", 
+         RowBox[{"GeoZoomLevel", "\[Rule]", "Automatic"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"elev1", "=", 
+       RowBox[{"QuantityMagnitude", "[", 
+        RowBox[{"GeoElevationData", "[", 
+         RowBox[{"location", ",", 
+          RowBox[{"GeoZoomLevel", "\[Rule]", "Automatic"}]}], "]"}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"level", "=", 
+       RowBox[{"Min", "[", "elev1", "]"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ReliefPlot", "[", 
+       RowBox[{
+        RowBox[{"elev1", "/.", 
+         RowBox[{
+          RowBox[{"z_Real", "/;", 
+           RowBox[{"z", "<", "sea"}]}], "\[Rule]", "level"}]}], ",", 
+        RowBox[{"DataReversed", "\[Rule]", "True"}], ",", 
+        RowBox[{"MaxPlotPoints", "\[Rule]", 
+         RowBox[{"ControlActive", "[", 
+          RowBox[{"300", ",", "\[Infinity]"}], "]"}]}], ",", 
+        RowBox[{"ImageSize", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"600", ",", "300"}], "}"}]}], ",", 
+        RowBox[{"DataRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"MinMax", "[", 
+            RowBox[{"geodata", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "All", ",", "All", ",", "2"}], "]"}], "]"}], 
+            "]"}], ",", 
+           RowBox[{"MinMax", "[", 
+            RowBox[{"geodata", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "All", ",", "All", ",", "1"}], "]"}], "]"}], 
+            "]"}]}], "}"}]}], ",", 
+        RowBox[{"ColorFunction", "\[Rule]", "\"\<Rainbow\>\""}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Epilog", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"EdgeForm", "[", 
+              RowBox[{"{", 
+               RowBox[{"Cyan", ",", 
+                RowBox[{"Thickness", "[", "0.0009", "]"}]}], "}"}], "]"}], 
+             ",", 
+             RowBox[{"FaceForm", "[", 
+              RowBox[{"{", 
+               RowBox[{"Opacity", "[", 
+                RowBox[{"0.07", ",", "Blue"}], "]"}], "}"}], "]"}], ",", 
+             RowBox[{"location", "[", "\"\<Polygon\>\"", "]"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"AbsolutePointSize", "[", "10", "]"}], ",", "White", ",", 
+             RowBox[{"Point", "[", "address", "]"}]}], "}"}]}], "}"}]}]}], 
+       "]"}]}]}], "]"}]}], " ", "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.77178115985585*^9, 3.771781160995567*^9}, 
+   3.7717812625466413`*^9, {3.77178731435107*^9, 3.77178732056817*^9}, {
+   3.771928165494057*^9, 3.7719281688104954`*^9}, {3.7719296246105795`*^9, 
+   3.7719296518045807`*^9}, {3.771929821417326*^9, 3.771929821949175*^9}, {
+   3.7719422807877684`*^9, 3.7719422811366158`*^9}, {3.7719423203847446`*^9, 
+   3.771942320497175*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"854daf26-35b4-4456-bcc1-301a97321aa9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"seaLevelRiseAddressV1", "[", 
+   RowBox[{"street_", ",", "city_", ",", "state_", ",", "country_", ",", 
+    RowBox[{"county_", ":", "\"\<No County given\>\""}]}], "]"}], " ", ":=", 
+  " ", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"Manipulate", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", "address", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"address", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Interpreter", "[", "\"\<StreetAddress\>\"", "]"}], "[", 
+         RowBox[{"ToString", "[", 
+          RowBox[{"{", 
+           RowBox[{"street", ",", 
+            RowBox[{"city", "[", "\"\<Name\>\"", "]"}], ",", 
+            RowBox[{"state", "[", "\"\<Name\>\"", "]"}]}], "}"}], "]"}], 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"seaLevelRiseFunction", "[", 
+        RowBox[{"address", ",", "location", ",", "sea"}], "]"}]}]}], "]"}], 
+    ",", "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"location", ",", "country", ",", "\"\<Zoom Level\>\""}], "}"}],
+       ",", 
+      RowBox[{"{", 
+       RowBox[{"country", ",", "state", ",", "county", ",", "city"}], "}"}], 
+      ",", " ", 
+      RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], " ", "}"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"sea", ",", "0", ",", "\"\<sea level change (in feet)\>\""}], 
+       "}"}], ",", 
+      RowBox[{"-", "400"}], ",", "400", ",", "5", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"SynchronousUpdating", "\[Rule]", "False"}], ",", 
+    RowBox[{"SynchronousInitialization", "\[Rule]", "False"}], ",", 
+    RowBox[{"Deployed", "\[Rule]", "True"}], ",", " ", 
+    RowBox[{"AutorunSequencing", "\[Rule]", 
+     RowBox[{"{", "2", "}"}]}], ",", " ", 
+    RowBox[{"Deployed", "\[Rule]", "True"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7719298704521008`*^9, 3.7719298723819227`*^9}, {
+  3.771929916873412*^9, 3.771929999698018*^9}, {3.77193018339627*^9, 
+  3.771930193397184*^9}, {3.77194221963443*^9, 3.771942220988576*^9}, {
+  3.7719422930776668`*^9, 3.771942296118329*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"cddb6d6e-a1df-459f-aec4-0d1686862d89"],
+
+Cell[BoxData[
+ RowBox[{"seaLevelRiseAddressV1", "[", 
+  RowBox[{"\"\<100 Heron Blvd\>\"", ",", 
+   TemplateBox[{"\"Cambridge\"", 
+     RowBox[{"Entity", "[", 
+       RowBox[{"\"City\"", ",", 
+         RowBox[{"{", 
+           
+           RowBox[{"\"Cambridge\"", ",", "\"Maryland\"", ",", 
+             "\"UnitedStates\""}], "}"}]}], "]"}], 
+     "\"Entity[\\\"City\\\", {\\\"Cambridge\\\", \\\"Maryland\\\", \
+\\\"UnitedStates\\\"}]\"", "\"city\""},
+    "Entity"], ",", 
+   TemplateBox[{"\"Maryland, United States\"", 
+     RowBox[{"Entity", "[", 
+       RowBox[{"\"AdministrativeDivision\"", ",", 
+         RowBox[{"{", 
+           RowBox[{"\"Maryland\"", ",", "\"UnitedStates\""}], "}"}]}], "]"}], 
+     "\"Entity[\\\"AdministrativeDivision\\\", {\\\"Maryland\\\", \
+\\\"UnitedStates\\\"}]\"", "\"administrative division\""},
+    "Entity"], ",", 
+   TemplateBox[{"\"United States\"", 
+     RowBox[{"Entity", "[", 
+       RowBox[{"\"Country\"", ",", "\"UnitedStates\""}], "]"}], 
+     "\"Entity[\\\"Country\\\", \\\"UnitedStates\\\"]\"", "\"country\""},
+    "Entity"], ",", 
+   TemplateBox[{"\"Dorchester County, Maryland, United States\"", 
+     RowBox[{"Entity", "[", 
+       RowBox[{"\"AdministrativeDivision\"", ",", 
+         RowBox[{"{", 
+           
+           RowBox[{"\"DorchesterCounty\"", ",", "\"Maryland\"", ",", 
+             "\"UnitedStates\""}], "}"}]}], "]"}], 
+     "\"Entity[\\\"AdministrativeDivision\\\", {\\\"DorchesterCounty\\\", \
+\\\"Maryland\\\", \\\"UnitedStates\\\"}]\"", "\"administrative division\""},
+    "Entity"]}], "]"}]], "Input",
+ CellChangeTimes->{{3.771942309546065*^9, 3.771942342495143*^9}, {
+  3.771942411731011*^9, 3.7719424781390753`*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"3739fe57-0c07-48ed-99b8-3aa0a73b54ba"],
+
+Cell["\<\
+This function can take street names either as strings or as plain input, and \
+the rest of the arguments are best taken with natural language input. The \
+counties, or secondary administrative divisions is an optional variable at \
+the end of the function. If no county is given, nothing will display for that \
+zoom level, but the rest of the code is still completely functional. \
+\>", "Text",
+ CellChangeTimes->{{3.77194251828752*^9, 3.771942609086613*^9}, {
+  3.771946619755966*^9, 
+  3.771946638447632*^9}},ExpressionUUID->"956bfcd8-1d91-42f3-85e6-\
+ee77c1fb3a22"],
+
+Cell["\<\
+The final functionality implemented was a shortcut to see a region if all the \
+ice on earth melted. National Geographic predicts that if all ice on earth \
+melted, the combined melted water and thermal expansion would result in 216 \
+feet of sea level rise [3]. Therefore, I have implemented into the manipulate \
+a menu that can display a region at 216 feet of sea level rise, as shown \
+below. \
+\>", "Text",
+ CellChangeTimes->{{3.7719426173758345`*^9, 3.7719426431637077`*^9}, {
+  3.771944383801443*^9, 3.77194441596104*^9}, {3.7719444569826984`*^9, 
+  3.771944487538002*^9}, {3.7719449098038025`*^9, 3.7719449102982683`*^9}, {
+  3.7719466722253895`*^9, 3.77194667306215*^9}, {3.771946710243969*^9, 
+  3.771946713273678*^9}},ExpressionUUID->"a10a78cb-66e1-4e8a-b051-\
+67e055257ad4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"seaLevelRiseAddressV2", "[", 
+   RowBox[{"street_", ",", "city_", ",", "state_", ",", "country_", ",", 
+    RowBox[{"county_", ":", "\"\<No County given\>\""}]}], "]"}], " ", ":=", 
+  " ", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"Manipulate", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", "address", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"address", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Interpreter", "[", "\"\<StreetAddress\>\"", "]"}], "[", 
+         RowBox[{"ToString", "[", 
+          RowBox[{"{", 
+           RowBox[{"street", ",", 
+            RowBox[{"city", "[", "\"\<Name\>\"", "]"}], ",", 
+            RowBox[{"state", "[", "\"\<Name\>\"", "]"}]}], "}"}], "]"}], 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"seaLevelRiseFunction", "[", 
+        RowBox[{"address", ",", "location", ",", "sea"}], "]"}]}]}], "]"}], 
+    ",", "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"location", ",", "country", ",", "\"\<Zoom Level\>\""}], "}"}],
+       ",", 
+      RowBox[{"{", 
+       RowBox[{"country", ",", "state", ",", "county", ",", "city"}], "}"}], 
+      ",", " ", 
+      RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], " ", "}"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"sea", ",", "0", ",", "\"\<sea level change (in feet)\>\""}], 
+       "}"}], ",", 
+      RowBox[{"-", "400"}], ",", "400", ",", "5", ",", 
+      RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+    RowBox[{"{", 
+     RowBox[{"sea", ",", 
+      RowBox[{"{", 
+       RowBox[{"216", "\[Rule]", "\"\<what if all ice melted...\>\""}], 
+       "}"}]}], "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"SynchronousUpdating", "\[Rule]", "False"}], ",", 
+    RowBox[{"SynchronousInitialization", "\[Rule]", "False"}], ",", 
+    RowBox[{"Deployed", "\[Rule]", "True"}], ",", " ", 
+    RowBox[{"AutorunSequencing", "\[Rule]", 
+     RowBox[{"{", "2", "}"}]}], ",", " ", 
+    RowBox[{"Deployed", "\[Rule]", "True"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.771944550482903*^9, 3.771944551060878*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"39dca9a0-a147-402b-890d-b7aff9dabf9e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"seaLevelRiseAddressV2", "[", 
+   RowBox[{"\"\<9 Cardinal Park dr SE\>\"", ",", 
+    TemplateBox[{"\"Leesburg\"", 
+      RowBox[{"Entity", "[", 
+        RowBox[{"\"City\"", ",", 
+          RowBox[{"{", 
+            
+            RowBox[{"\"Leesburg\"", ",", "\"Virginia\"", ",", 
+              "\"UnitedStates\""}], "}"}]}], "]"}], 
+      "\"Entity[\\\"City\\\", {\\\"Leesburg\\\", \\\"Virginia\\\", \
+\\\"UnitedStates\\\"}]\"", "\"city\""},
+     "Entity"], ",", 
+    NamespaceBox["LinguisticAssistant",
+     DynamicModuleBox[{Typeset`query$$ = "virginia", Typeset`boxes$$ = 
+      TemplateBox[{"\"Virginia, United States\"", 
+        RowBox[{"Entity", "[", 
+          RowBox[{"\"AdministrativeDivision\"", ",", 
+            RowBox[{"{", 
+              RowBox[{"\"Virginia\"", ",", "\"UnitedStates\""}], "}"}]}], 
+          "]"}], "\"Entity[\\\"AdministrativeDivision\\\", {\\\"Virginia\\\", \
+\\\"UnitedStates\\\"}]\"", "\"administrative division\""}, "Entity"], 
+      Typeset`allassumptions$$ = {{
+       "type" -> "Clash", "word" -> "virginia", "template" -> 
+        "Assuming \"${word}\" is ${desc1}. Use as ${desc2} instead", "count" -> 
+        "6", "Values" -> {{
+          "name" -> "USState", "desc" -> "a US state", "input" -> 
+           "*C.virginia-_*USState-"}, {
+          "name" -> "GivenName", "desc" -> "a given name", "input" -> 
+           "*C.virginia-_*GivenName-"}, {
+          "name" -> "AdministrativeDivision", "desc" -> 
+           "an administrative division", "input" -> 
+           "*C.virginia-_*AdministrativeDivision-"}, {
+          "name" -> "SolarSystemFeature", "desc" -> "a solar system feature", 
+           "input" -> "*C.virginia-_*SolarSystemFeature-"}, {
+          "name" -> "City", "desc" -> "a city", "input" -> 
+           "*C.virginia-_*City-"}, {
+          "name" -> "Species", "desc" -> "a species specification", "input" -> 
+           "*C.virginia-_*Species-"}}}}, Typeset`assumptions$$ = {}, 
+      Typeset`open$$ = {1}, Typeset`querystate$$ = {
+      "Online" -> True, "Allowed" -> True, "mparse.jsp" -> 
+       0.5588599`7.198847942200249, "Messages" -> {}}}, 
+      DynamicBox[ToBoxes[
+        AlphaIntegration`LinguisticAssistantBoxes["", 4, Automatic, 
+         Dynamic[Typeset`query$$], 
+         Dynamic[Typeset`boxes$$], 
+         Dynamic[Typeset`allassumptions$$], 
+         Dynamic[Typeset`assumptions$$], 
+         Dynamic[Typeset`open$$], 
+         Dynamic[Typeset`querystate$$]], StandardForm],
+       ImageSizeCache->{62.5, {8., 14.5}},
+       TrackedSymbols:>{
+        Typeset`query$$, Typeset`boxes$$, Typeset`allassumptions$$, 
+         Typeset`assumptions$$, Typeset`open$$, Typeset`querystate$$}],
+      DynamicModuleValues:>{},
+      UndoTrackedVariables:>{Typeset`open$$}],
+     BaseStyle->{"Deploy"},
+     DeleteWithContents->True,
+     Editable->False,
+     SelectWithContents->True], ",", 
+    TemplateBox[{"\"United States\"", 
+      RowBox[{"Entity", "[", 
+        RowBox[{"\"Country\"", ",", "\"UnitedStates\""}], "]"}], 
+      "\"Entity[\\\"Country\\\", \\\"UnitedStates\\\"]\"", "\"country\""},
+     "Entity"], ",", 
+    TemplateBox[{"\"Loudoun County, Virginia, United States\"", 
+      RowBox[{"Entity", "[", 
+        RowBox[{"\"AdministrativeDivision\"", ",", 
+          RowBox[{"{", 
+            
+            RowBox[{"\"LoudounCounty\"", ",", "\"Virginia\"", ",", 
+              "\"UnitedStates\""}], "}"}]}], "]"}], 
+      "\"Entity[\\\"AdministrativeDivision\\\", {\\\"LoudounCounty\\\", \
+\\\"Virginia\\\", \\\"UnitedStates\\\"}]\"", "\"administrative division\""},
+     "Entity"]}], "]"}], " "}]], "Input",
+ CellChangeTimes->{{3.771944539516733*^9, 3.7719445962515755`*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"340d7a00-ee91-49ae-b02a-da480b1346c7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Conclusions and future work", "Section",
+ CellChangeTimes->{{3.771931197735543*^9, 
+  3.7719312052282343`*^9}},ExpressionUUID->"3a22d0ff-28a5-42cb-a598-\
+187e9cd0358a"],
+
+Cell["\<\
+These plots and GIFs demonstrate that even a small change in sea level can \
+wipe out a large amount of land, such as the states of Florida and Maryland. \
+Additionally, the predicted maximum rise of 216 feet could have strong \
+effects in various regions of the world and has the potential to wipe out \
+many cities and locations without proper preparation for sea level rise. 
+
+In order to make this function more accessible, the functions could be put on \
+a website to allow for anyone to explore sea level rise. This was attempted, \
+but difficulties with Wolfram Cloud arose that will need to be revisited. \
+Another possible feature to revisit would be to return the land lost for any \
+given area, to give more perspective on how a small global change could \
+potentially have a large impact. This could possibly be done by analyzing the \
+amount of ocean or purple pixels in the relief plot, or by analyzing the data \
+directly to select the z-coordinates now at sea level. Finally, the function \
+could consider land that is currently under sea level, such as the \
+Netherlands, more accurately portray how they are filled. Different \
+techniques of elevation data analysis and image processing were explored to \
+address this issue, but the techniques would need to be improved to recognize \
+geological depressions from oceans and to generate proper topological maps in \
+an efficient manner. \
+\>", "Text",
+ CellChangeTimes->{{3.771944665366316*^9, 
+  3.771944821101845*^9}},ExpressionUUID->"80b60399-49a3-464b-a692-\
+2101eb7e1b14"],
+
+Cell[CellGroupData[{
+
+Cell["Citations", "Subsubsection",
+ CellChangeTimes->{{3.7719448443043547`*^9, 
+  3.7719448678770943`*^9}},ExpressionUUID->"fa3974ba-5711-4769-9c9a-\
+4236e2e32a81"],
+
+Cell["\<\
+[1] https : // sedac.ciesin.columbia.edu/es/papers/Coastal_Zone _Pop \
+_Method.pdf
+[2] https : // demonstrations.wolfram.com/SeaLevelRise/
+[3] https://www.nationalgeographic.com/magazine/2013/09/rising-seas-ice-melt-\
+new-shoreline-maps/\
+\>", "Text",
+ CellChangeTimes->{{3.771944361244214*^9, 3.7719443667897863`*^9}, {
+  3.7719448433204055`*^9, 3.771944860269541*^9}, {3.77194493384861*^9, 
+  3.771944934523806*^9}},ExpressionUUID->"1e123dd3-6c4c-42c5-92d2-\
+268e36af1603"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1428., 735.75},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+DockedCells->{
+  Cell[
+   TextData[{
+     StyleBox["  WOLFRAM ", 
+      RGBColor[0.97, 0.83, 0.35], FontFamily -> "Source Sans Pro", FontWeight -> 
+      Bold, FontSize -> 40], 
+     StyleBox["SUMMER SCHOOL", 
+      GrayLevel[1], FontFamily -> "Source Sans Pro", FontSize -> 40], 
+     StyleBox[" 2019", 
+      RGBColor[0.97, 0.83, 0.35], FontFamily -> "Source Sans Pro", FontSize -> 
+      40]}], CellFrameMargins -> 10, Background -> 
+   RGBColor[0.12, 0.14, 0.15]]},
+FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"aeb10dbd-d164-4796-b8c4-842265680e87"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 329, 6, 98, "Title",ExpressionUUID->"49ab34ee-bfd5-49f5-beef-400d3cc456dd"],
+Cell[912, 30, 541, 11, 81, "Text",ExpressionUUID->"94536f76-3fd2-4bf6-b228-fa93ec9acae9"],
+Cell[1456, 43, 365, 6, 35, "Text",ExpressionUUID->"b70c649b-a958-4202-9f22-238ea1f9c7d4"],
+Cell[CellGroupData[{
+Cell[1846, 53, 159, 3, 67, "Section",ExpressionUUID->"765802f1-9a17-4afe-93ed-b9aa389559aa"],
+Cell[2008, 58, 1494, 25, 173, "Text",ExpressionUUID->"8c7192f8-2da6-4f7f-a8da-43487bdec4de"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3539, 88, 168, 3, 67, "Section",ExpressionUUID->"c58edb44-6383-42aa-b730-13bde8f77ae2"],
+Cell[3710, 93, 535, 9, 58, "Text",ExpressionUUID->"03b316f3-9eb7-41a8-923e-0b6dfe9b90d8"],
+Cell[4248, 104, 803, 18, 39, "Input",ExpressionUUID->"6cc17006-bc67-4d9f-bf70-74d897c05e67"],
+Cell[5054, 124, 642, 15, 28, "Input",ExpressionUUID->"bc33d079-c1b3-4e2e-b1f6-24d8d9e6ea96"],
+Cell[5699, 141, 374, 7, 28, "Input",ExpressionUUID->"ad944ca1-6c53-42a1-8b46-66fb1c7618d8"],
+Cell[6076, 150, 654, 11, 58, "Text",ExpressionUUID->"3dbde470-ee2e-400c-9c5e-cd37774bba59"],
+Cell[6733, 163, 474, 11, 28, "Input",ExpressionUUID->"761e549c-a2e8-4961-bee5-349c0c9e38ba"],
+Cell[7210, 176, 367, 8, 28, "Input",ExpressionUUID->"ef2ccce9-02f0-4a86-9e5e-804d73748444"],
+Cell[7580, 186, 528, 9, 35, "Text",ExpressionUUID->"388c1052-d6d4-4dac-84db-e293ba755933"],
+Cell[8111, 197, 448, 8, 58, "Text",ExpressionUUID->"635f208d-e343-49db-a14d-ad67b1fcdfab"],
+Cell[8562, 207, 337, 9, 101, "CodeText",ExpressionUUID->"ddb7e4be-25cc-4a21-b2c4-cf3d251e0221"],
+Cell[8902, 218, 257, 6, 35, "Text",ExpressionUUID->"095602cf-7bd5-4cc3-bc36-b76574ea83e6"],
+Cell[9162, 226, 2546, 58, 143, "Input",ExpressionUUID->"1a89bec9-bba2-4aa9-a1aa-399af130c7b5"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11745, 289, 160, 3, 67, "Section",ExpressionUUID->"f36410f2-419f-42ef-b9a2-6d47f634712e"],
+Cell[11908, 294, 552, 10, 35, "Text",ExpressionUUID->"8e64f6a9-8b52-45ff-b4d1-51f6fede753d"],
+Cell[12463, 306, 2599, 59, 200, "Input",ExpressionUUID->"e72b1a3c-9847-41e7-8629-f3d8494c2f10"],
+Cell[15065, 367, 944, 21, 28, "Input",ExpressionUUID->"2574a861-11dc-4680-916a-135ba4c2e40e"],
+Cell[16012, 390, 2844, 56, 40, "Input",ExpressionUUID->"500e0911-3d4e-42b2-a3eb-37f29789dbd7"],
+Cell[18859, 448, 834, 13, 81, "Text",ExpressionUUID->"455e8f18-1c91-45ee-9ce4-2b734a406e04"],
+Cell[19696, 463, 3076, 70, 238, "Input",ExpressionUUID->"56cfb32f-46b3-4256-9af0-338faa788db0"],
+Cell[22775, 535, 802, 19, 28, "Input",ExpressionUUID->"d43cfb32-28ee-44d5-8e39-b605878879e2"],
+Cell[23580, 556, 578, 11, 39, "Input",ExpressionUUID->"e77ce3c3-37f9-4ce7-bae8-d09e26b4ca2b"],
+Cell[24161, 569, 993, 16, 58, "Text",ExpressionUUID->"0f97b0e3-26ba-43f2-8595-8f43d4a5fcf0"],
+Cell[25157, 587, 3500, 80, 238, "Input",ExpressionUUID->"854daf26-35b4-4456-bcc1-301a97321aa9"],
+Cell[28660, 669, 2529, 52, 295, "Input",ExpressionUUID->"cddb6d6e-a1df-459f-aec4-0d1686862d89"],
+Cell[31192, 723, 1763, 38, 39, "Input",ExpressionUUID->"3739fe57-0c07-48ed-99b8-3aa0a73b54ba"],
+Cell[32958, 763, 579, 10, 58, "Text",ExpressionUUID->"956bfcd8-1d91-42f3-85e6-ee77c1fb3a22"],
+Cell[33540, 775, 796, 13, 58, "Text",ExpressionUUID->"a10a78cb-66e1-4e8a-b051-67e055257ad4"],
+Cell[34339, 790, 2550, 54, 333, "Input",ExpressionUUID->"39dca9a0-a147-402b-890d-b7aff9dabf9e"],
+Cell[36892, 846, 3776, 77, 39, "Input",ExpressionUUID->"340d7a00-ee91-49ae-b02a-da480b1346c7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[40705, 928, 174, 3, 67, "Section",ExpressionUUID->"3a22d0ff-28a5-42cb-a598-187e9cd0358a"],
+Cell[40882, 933, 1555, 24, 196, "Text",ExpressionUUID->"80b60399-49a3-464b-a692-2101eb7e1b14"],
+Cell[CellGroupData[{
+Cell[42462, 961, 164, 3, 45, "Subsubsection",ExpressionUUID->"fa3974ba-5711-4769-9c9a-4236e2e32a81"],
+Cell[42629, 966, 485, 10, 81, "Text",ExpressionUUID->"1e123dd3-6c4c-42c5-92d2-268e36af1603"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
