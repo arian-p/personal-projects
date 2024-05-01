@@ -6,7 +6,7 @@ Javascript:
 Magic Mirror Modifications to personalize
 
 Wolfram Research:
-Wolfram code used in indepdent research work, testing effectiveness of Lemna Minor Fertilizer. Additional side project on sea level rise.
+Wolfram code used in independent research work, testing effectiveness of Lemna Minor Fertilizer. Additional side project on sea level rise.
 
 Matlab:
 Bingo - makes a randomized bingo board
