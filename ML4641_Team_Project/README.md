@@ -63,9 +63,9 @@ Taiki Aiba, Jeongyeop Han, Sean Liu, Arian Patel, Devin Zhang
 		- These are the boxplots of the the deposit and monthly rent, before and after cleaning.
 			![Clean Data Visualization](/ML4641_Team_Project/Model%20Visualizations/Decision%20Tree%20Visualizations/DT_cleanData_v1.png)
 		- This model is very complex, so we sought to see if we could cut out any features. We used a recursive feature elimination technique, based on a stratified K-fold method. We were expecting that we would rapidly gain accuracy as we went from very 1 feature to 2-3 features, and then having the accuracy plateau. Instead, we found that accuracy remained nearly constant as we cut out features, shown in the figure below.
-			![](/Model%20Visualizations/Decision%20Tree%20Visualizations/recursive_feature_elimination.png)
+			![](/ML4641_Team_Project/Model%20Visualizations/Decision%20Tree%20Visualizations/recursive_feature_elimination.png)
 		- From this, we could just use a single feature, in this case the "unit_area" of a dwelling to predict with nearly identical accuracy (99.28%) if someone will choose to rent the home or not. This simplified model is shown as follows.
-			![](/Model%20Visualizations/Decision%20Tree%20Visualizations/dt_2_viz.svg)
+			![](/ML4641_Team_Project/Model%20Visualizations/Decision%20Tree%20Visualizations/dt_2_viz.svg)
 		- Please note that there are still many leaves on this tree, but this is due to the way that this visualization handles displaying other features - the final rent vs not rent decision is just on the unit area. This provides an indication of what realtors should look for as they offer places to rent, or if they choose to instead put that apartment up for sale.
 
 
@@ -74,15 +74,15 @@ Taiki Aiba, Jeongyeop Han, Sean Liu, Arian Patel, Devin Zhang
 		- These are the visualizations and accuracies of each regression model we implemented:
 			- Linear regression: 
 				- root mean squared error = 5.1098045225437246e-08
-				![](/Model%20Visualizations/Regression%20Visualizations/regression_linear.png)
+				![](/ML4641_Team_Project/Model%20Visualizations/Regression%20Visualizations/regression_linear.png)
 				
 			- Lasso regression:
 				- root mean squared error = 3.0215379169704954e-07
-				![](/Model%20Visualizations/Regression%20Visualizations/regression_lasso.png)
+				![](/ML4641_Team_Project/Model%20Visualizations/Regression%20Visualizations/regression_lasso.png)
 			
 			- Logistic regression:
 				- root mean squared error = 3.0046382410075513e-07
-				![](/Model%20Visualizations/Regression%20Visualizations/regression_logistic.png)
+				![](/ML4641_Team_Project/Model%20Visualizations/Regression%20Visualizations/regression_logistic.png)
 	
 	- Clustering:
 	
@@ -91,42 +91,42 @@ Taiki Aiba, Jeongyeop Han, Sean Liu, Arian Patel, Devin Zhang
 				- Silhouette Score: -0.18707307274001764
 				- Calinski-Harabasz Index: 6.182089437243131
 				- Davies-Bouldin Index: 1.3571312867411092
-				![](/Model%20Visualizations/Clustering%20Visualizations/dbscan.png)
+				![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/dbscan.png)
 				
 			- K-Means:
-				![](/Model%20Visualizations/Regression%20Visualizations/kmeans_elbow.png)
+				![](/ML4641_Team_Project/Model%20Visualizations/Regression%20Visualizations/kmeans_elbow.png)
 				
 				- K-Means with 2 clusters:
 					- Silhouette Score: 0.19720861390886454
 					- Calinski-Harabasz Index: 110.02377547399512
 					- Davies-Bouldin Index: 2.129314981138082
-					![](/Model%20Visualizations/Clustering%20Visualizations/kmeans_2.png)
+					![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/kmeans_2.png)
 
 				- K-Means with 3 clusters:
 					- Silhouette Score: 0.16150905135122215
 					- Calinski-Harabasz Index: 87.0236352335191
 					- Davies-Bouldin Index: 1.989455784259576
-					![](/Model%20Visualizations/Clustering%20Visualizations/kmeans_3.png)
+					![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/kmeans_3.png)
 					
 				- K-Means with 4 clusters:
 					- Silhouette Score: 0.17250978214823456
 					- Calinski-Harabasz Index: 79.68900965832557
 					- Davies-Bouldin Index: 1.9907834210480944
-					![](/Model%20Visualizations/Clustering%20Visualizations/kmeans_4.png)
+					![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/kmeans_4.png)
 					
 			- GMM accuracies:
 				- Silhouette Score: 0.08665692335927525
 				- Calinski-Harabasz Index: 39.40906437336789
 				- Davies-Bouldin Index: 3.0697599270489992
-				![](/Model%20Visualizations/Clustering%20Visualizations/gmm_bic.png)
-				![](/Model%20Visualizations/Clustering%20Visualizations/gmm.png)
+				![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/gmm_bic.png)
+				![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/gmm.png)
 
 		- These are the boxplots of the features in the dataset we used.
-			![](/Model%20Visualizations/Clustering%20Visualizations/housing_prices_area.png)
-			![](/Model%20Visualizations/Clustering%20Visualizations/housing_prices_baths.png)
-			![](/Model%20Visualizations/Clustering%20Visualizations/housing_prices_beds.png)
-			![](/Model%20Visualizations/Clustering%20Visualizations/housing_prices_price.png)
-			![](/Model%20Visualizations/Clustering%20Visualizations/housing_prices_stories.png)
+			![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/housing_prices_area.png)
+			![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/housing_prices_baths.png)
+			![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/housing_prices_beds.png)
+			![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/housing_prices_price.png)
+			![](/ML4641_Team_Project/Model%20Visualizations/Clustering%20Visualizations/housing_prices_stories.png)
 		
 		- Analysis of model:
 			- Because we want to make silhouette score close to 1, maximize the Calinski-Harabasz index, and minimize Davies-Bouldin index, the best clustering model is K-Means with 2 clusters. 
