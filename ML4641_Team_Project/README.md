@@ -54,7 +54,7 @@ Taiki Aiba, Jeongyeop Han, Sean Liu, Arian Patel, Devin Zhang
 	- Decision Tree:
 	
 		- We first created a decision tree using all 5 features ("room_qty", "unit_area", "elevator", "building_floor_count", "storage"), resulting in a high accuracy of 0.993, and looks like the following. Please note that you need to open the image in a new tab to see it clearly.
-			![](/Model Visualizations/Decision Tree Visualizations/dt_0_viz.svg)
+			![](/Model%20Visualizations/Decision%20Tree%20Visualizations/dt_0_viz.svg)
 		- These are the measures to evaluate the performance our 5-feature decision tree.
 			- Accuracy: 0.993
 			- Precision: 0.981
