@@ -54,14 +54,14 @@ Taiki Aiba, Jeongyeop Han, Sean Liu, Arian Patel, Devin Zhang
 	- Decision Tree:
 	
 		- We first created a decision tree using all 5 features ("room_qty", "unit_area", "elevator", "building_floor_count", "storage"), resulting in a high accuracy of 0.993, and looks like the following. Please note that you need to open the image in a new tab to see it clearly.
-			![](/Model%20Visualizations/Decision%20Tree%20Visualizations/dt_0_viz.svg)
+			![/dt_0_viz](/ML4641_Team_Project/Model%20Visualizations/Decision%20Tree%20Visualizations/dt_0_viz.svg)
 		- These are the measures to evaluate the performance our 5-feature decision tree.
 			- Accuracy: 0.993
 			- Precision: 0.981
 			- Recall: 0.99
 			- F1 Score: 0.985
 		- These are the boxplots of the the deposit and monthly rent, before and after cleaning.
-			![Clean Data Visualization](/Model%20Visualizations/Decision%20Tree%20Visualizations/DT_cleanData_v1.png)
+			![Clean Data Visualization](/ML4641_Team_Project/Model%20Visualizations/Decision%20Tree%20Visualizations/DT_cleanData_v1.png)
 		- This model is very complex, so we sought to see if we could cut out any features. We used a recursive feature elimination technique, based on a stratified K-fold method. We were expecting that we would rapidly gain accuracy as we went from very 1 feature to 2-3 features, and then having the accuracy plateau. Instead, we found that accuracy remained nearly constant as we cut out features, shown in the figure below.
 			![](/Model%20Visualizations/Decision%20Tree%20Visualizations/recursive_feature_elimination.png)
 		- From this, we could just use a single feature, in this case the "unit_area" of a dwelling to predict with nearly identical accuracy (99.28%) if someone will choose to rent the home or not. This simplified model is shown as follows.
