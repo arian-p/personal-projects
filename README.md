@@ -2,6 +2,9 @@
 
 A repository with a few of my personal projects.
 
+[Python] ML4641_Team_Project:
+A repository for a machine learning team project on real estate datasets, analytics, and predictions.
+
 Javascript:
 Magic Mirror Modifications to personalize
 
