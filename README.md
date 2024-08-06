@@ -14,3 +14,5 @@ Word Cloud Parser - Takes a text file, cleans it up, puts out a wordcloud of the
 
 Stable Diffusion:
 Sample generations, boot commands for my PC, and effective prompts for people.
+
+test commit
